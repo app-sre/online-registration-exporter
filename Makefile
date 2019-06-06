@@ -31,7 +31,7 @@ vendor:
 	go mod tidy
 	go mod verify
 
-image:
+image: build
 	docker build -t $(REPO):$(TAG) .
 
 image-push:
