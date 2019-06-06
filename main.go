@@ -15,7 +15,6 @@ import (
 	"github.com/prometheus/common/promlog/flag"
 	"github.com/prometheus/common/version"
 	"gopkg.in/alecthomas/kingpin.v2"
-	"gopkg.in/yaml.v3"
 
 	"github.com/app-sre/online-registration-exporter/config"
 	"github.com/app-sre/online-registration-exporter/onlinereg"
@@ -179,22 +178,8 @@ func run() int {
     <body>
     <h1>Online-registration Exporter</h1>
     <p><a href="/metrics">Metrics</a></p>
-	<p><a href="/config">Configuration</a></p>
 	</body>
     </html>`))
-	})
-
-	http.HandleFunc("/config", func(w http.ResponseWriter, r *http.Request) {
-		sc.RLock()
-		c, err := yaml.Marshal(sc.C)
-		sc.RUnlock()
-		if err != nil {
-			level.Warn(logger).Log("msg", "Error marshalling configuration", "err", err)
-			http.Error(w, err.Error(), 500)
-			return
-		}
-		w.Header().Set("Content-Type", "text/plain")
-		w.Write(c)
 	})
 
 	srv := http.Server{Addr: *listenAddress}
