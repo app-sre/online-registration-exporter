@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: online-registration-exporter
+  labels:
+    app: online-registration-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: online-registration-exporter
+  template:
+    metadata:
+      labels:
+        app: online-registration-exporter
+    spec:
+      containers:
+      - name: online-registration-exporter
+        image: quay.io/app-sre/online-registration-exporter:102a592
+        ports:
+        - containerPort: 9115
+          name: http
+          protocol: TCP
+        volumeMounts:
+        - name: online-registration-exporter-config
+          mountPath: /etc/online-registration-exporter/
+          readOnly: true
+      volumes:
+      - name: online-registration-exporter-config
+        secret:
+          defaultMode: 420
+          secretName: online-registration-exporter-config
