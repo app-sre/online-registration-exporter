@@ -1,0 +1,8 @@
+api:
+  url: https://example.com/api/
+  user: my_user
+  token: my_token
+plans:
+- clusterA
+- clusterB
+- clusterC
