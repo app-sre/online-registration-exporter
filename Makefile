@@ -1,12 +1,15 @@
 .PHONY: all build image check vendor dependencies
 SHELL=/bin/bash -o pipefail
 
-GO_PKG=github.com/app-sre/online-registration-exporter
+NAME				:= online-registration-exporter
+GO_PKG				:= github.com/app-sre/$(NAME)
+REPO				:= quay.io/app-sre/$(NAME)
+TAG					:= $(shell git rev-parse --short HEAD)
 
-PKGS				= $(shell go list ./... | grep -v -E '/vendor/|/test')
+PKGS				:= $(shell go list ./... | grep -v -E '/vendor/|/test')
 GOLANG_FILES		:= $(shell find . -name \*.go -print)
 FIRST_GOPATH		:= $(firstword $(subst :, ,$(shell go env GOPATH)))
-GOLANGCI_LINT_BIN	= $(FIRST_GOPATH)/bin/golangci-lint
+GOLANGCI_LINT_BIN	:= $(FIRST_GOPATH)/bin/golangci-lint
 
 .PHONY: all
 all: build
@@ -20,14 +23,19 @@ clean:
 # Building #
 ############
 
-.PHONY: build
 build:
-	go build -o online-registration-exporter .
+	go build -o $(NAME) .
 
 vendor:
 	go mod vendor
 	go mod tidy
 	go mod verify
+
+image:
+	docker build -t $(REPO):$(TAG) .
+
+image-push:
+	docker push $(REPO):$(TAG)
 
 ##############
 # Formatting #
