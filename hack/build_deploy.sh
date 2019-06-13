@@ -7,7 +7,7 @@ IMAGE_TAG=$(git rev-parse --short HEAD)
 docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app golang:1.12 make build
 
 # Build image
-docker build -t $IMAGE:$IMAGE_TAG
+docker build -t $IMAGE:$IMAGE_TAG .
 
 # Push image to quay.io
 if [[ -n "$QUAY_USER" && -n "$QUAY_TOKEN" ]]; then
