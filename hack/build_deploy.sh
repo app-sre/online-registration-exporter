@@ -1,14 +1,16 @@
 #!/bin/bash
 
-DOCKER_CONF="$PWD/.docker"
-mkdir -p "$DOCKER_CONF"
-docker --config="$DOCKER_CONF" login -u="$QUAY_USER" -p="$QUAY_TOKEN" quay.io
+IMAGE=app-sre/online-registration-exporter
+IMAGE_TAG=$(git rev-parse --short HEAD)
 
 # Build the binary
 docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app golang:1.12 make build
 
 # Build image
-docker build -t quay.io/app-sre/online-registration-exporter:$(git rev-parse --short HEAD) .
+docker build -t $IMAGE:$IMAGE_TAG
 
-# Push image
-docker push quay.io/app-sre/online-registration-exporter:$(git rev-parse --short HEAD)
+# Push image to quay.io
+if [[ -n "$QUAY_USER" && -n "$QUAY_TOKEN" ]]; then
+  docker --config="$PWD/.docker" login -u="$QUAY_USER" -p="$QUAY_TOKEN" quay.io
+  docker --config="$PWD/.docker" push quay.io/$IMAGE:$IMAGE_TAG
+fi
