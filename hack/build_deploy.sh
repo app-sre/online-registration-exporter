@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IMAGE=app-sre/online-registration-exporter
-IMAGE_TAG=$(git rev-parse --short HEAD)
+IMAGE_TAG=$(git rev-parse --short=7 HEAD)
 
 # Build the binary
 docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app golang:1.12 make build
