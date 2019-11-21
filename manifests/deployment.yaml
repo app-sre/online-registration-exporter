@@ -16,6 +16,13 @@ spec:
     spec:
       containers:
       - name: online-registration-exporter
+        resources:
+          limits:
+            cpu: 150m
+            memory: 150Mi
+          requests:
+            cpu: 100m
+            memory: 50Mi
         image: quay.io/app-sre/online-registration-exporter:102a592
         ports:
         - containerPort: 9115
