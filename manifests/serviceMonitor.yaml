@@ -10,7 +10,7 @@ spec:
   interval: 30s
   namespaceSelector:
     matchNames:
-      - app-sre-exporters
+      - ${NAMESPACE}
   selector:
     matchLabels:
       app: online-registration-exporter
