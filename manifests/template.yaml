@@ -60,7 +60,7 @@ objects:
     interval: 30s
     namespaceSelector:
       matchNames:
-        - app-sre-exporters
+        - ${NAMESPACE}
     selector:
       matchLabels:
         app: online-registration-exporter
@@ -88,4 +88,5 @@ parameters:
   displayName: online-registration-exporter container image tag
 - name: REPLICAS
   value: "1"
-
+- name: NAMESPACE
+  value: ""
