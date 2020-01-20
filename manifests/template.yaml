@@ -57,7 +57,7 @@ objects:
   spec:
     endpoints:
       - port: http
-    interval: 30s
+        interval: 30s
     namespaceSelector:
       matchNames:
         - ${NAMESPACE}
