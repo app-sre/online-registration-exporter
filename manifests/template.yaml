@@ -48,7 +48,7 @@ objects:
     name: online-registration-exporter-config
   data:
     config.yml: YXBpOgogIHVybDogaHR0cHM6Ly9leGFtcGxlLmNvbS9hcGkvCiAgdXNlcjogbXlfdXNlcgogIHRva2VuOiBteV90b2tlbgpwbGFuczoKLSBjbHVzdGVyQQotIGNsdXN0ZXJCCi0gY2x1c3RlckMK
-  apiVersion: monitoring.coreos.com/v1
+- apiVersion: monitoring.coreos.com/v1
   kind: ServiceMonitor
   metadata:
     labels:
